@@ -1,38 +1,71 @@
-const map = document.querySelector('.map');
-const ctx = map.getContext('2d');
-const modal = document.querySelector('.modal')
-const resetButton = document.querySelector('.reset-button')
+const map = document.querySelector(".map");
+const ctx = map.getContext("2d");
+const modal = document.querySelector(".modal");
+const resetButton = document.querySelector(".reset-button");
 
-resetButton.addEventListener('click', () => {
-  modal.style.display = 'none';
-  snake  = [
-    { x: 250, y: 250 },
-    { x: 260, y: 250 },
-    { x: 270, y: 250 },
-    { x: 280, y: 250 },
-    { x: 290, y: 250 },
-    { x: 300, y: 250 },
-    { x: 310, y: 250 },
-    { x: 320, y: 250 },
-    { x: 330, y: 250 },
-    { x: 340, y: 250 },
-    { x: 350, y: 250 }
-  ]
-})
+// Récupérer l'élément audio
+const backgroundMusic = document.getElementById("background-music");
 
-function gameLoop() {
-  drawSnake(ctx,snake);
-  moveSnake();
-  wallKill();
-  selfCollision();
-  drawItem()
+// Récupérer l'icône du bouton mute
+const muteIcon = document.getElementById("mute-icon");
 
-  if (snake[0].x === item.x && snake[0].y === item.y) {
-    generateItem()
-    growSnake()
+// Initialiser l'état de la musique
+let isPlaying = false;
+let isMuted = false;
+
+// Fonction pour jouer ou arrêter la musique au premier clic
+function toggleMusic() {
+  if (!isPlaying) {
+    backgroundMusic.play();
+    muteIcon.src = "img/mute.png"; // Icône pour musique activée
+    isPlaying = true;
+  } else {
+    toggleMute();
   }
 }
 
+// Fonction pour mute/unmute la musique après démarrage
+function toggleMute() {
+  if (isMuted) {
+    backgroundMusic.muted = false;
+    muteIcon.src = "img/mute.png"; // Icône pour musique activée
+  } else {
+    backgroundMusic.muted = true;
+    muteIcon.src = "img/unmute.png"; // Icône pour musique désactivée
+  }
+  isMuted = !isMuted;
+}
 
+// Événement pour gérer le clic sur l'icône (démarrer et mute/unmute)
+document.getElementById("music-toggle").addEventListener("click", toggleMusic);
 
-setInterval(gameLoop, 100)
+// Permet de contrer la blocage de la musique par Chrome en appuyant sur une touche
+window.addEventListener("keydown", () => {
+  if (backgroundMusic.paused) {
+    playBackgroundMusic();
+  }
+});
+
+resetButton.addEventListener("click", () => {
+  modal.style.display = "none";
+
+  snake = [
+    { x: 240, y: 240 },
+    { x: 260, y: 240 },
+  ];
+});
+
+function gameLoop() {
+  moveSnake();
+  drawSnake(ctx, snake);
+  wallKill();
+  selfCollision();
+  drawItem();
+
+  if (snake[0].x === item.x && snake[0].y === item.y) {
+    generateItem();
+    growSnake();
+  }
+}
+
+setInterval(gameLoop, 100);
