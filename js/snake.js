@@ -24,7 +24,6 @@ function drawSnake(ctx, snake) {
   for (let i = 1; i < snake.length - 1; i++) {
     ctx.fillRect(snake[i].x, snake[i].y, 10, 10)
   }
-  // si le 3eme param est true augmenter la taille du serpent
 
   ctx.fillStyle = 'blue';
   ctx.fillRect(snake[snake.length - 1].x, snake[snake.length - 1].y, 10, 10)

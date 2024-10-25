@@ -2,7 +2,6 @@ let item = {
   x: 0, y: 0
 }
 
-
 function drawItem() {
   ctx.fillStyle = 'purple';
   ctx.fillRect(item.x, item.y, 10, 10);
@@ -19,6 +18,5 @@ function generateItem() {
     }
   }
 }
-
 
 generateItem()

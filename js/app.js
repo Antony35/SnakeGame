@@ -21,8 +21,8 @@ resetButton.addEventListener('click', () => {
 })
 
 function gameLoop() {
-  moveSnake();
   drawSnake(ctx,snake);
+  moveSnake();
   wallKill();
   selfCollision();
   drawItem()
